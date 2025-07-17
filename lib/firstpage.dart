@@ -15,6 +15,7 @@ class _FirstpageState extends State<Firstpage> {
     return Scaffold(
       body: Stack(
         children: [
+          //background with color gredient
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -29,14 +30,20 @@ class _FirstpageState extends State<Firstpage> {
               ),
             ),
           ),
+          
+          //main body content here
           LayoutBuilder(
             builder: (context, constraints) {
+              //all content in center widget
               return Center(
+                //column for all contents (vertical)
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    //spacing for the weather logo
                     SizedBox(height: MediaQuery.of(context).size.height * 0.19),
+                    //weather logo
                     LottieBuilder.asset(
                       'assets_project/Cloud.json',
                       height: MediaQuery.of(context).size.height * 0.3,
@@ -44,9 +51,12 @@ class _FirstpageState extends State<Firstpage> {
                       fit: BoxFit.cover,
                       repeat: true,
                     ),
+                    //spacing for next content (Text "weather ForeCasts")
                     SizedBox(height: MediaQuery.of(context).size.height * 0.07),
+                    //dedicated column for the text "weather forecasts"
                     Column(
                       children: [
+                        //text "weather"
                         Text(
                           "Weather",
                           style: TextStyle(
@@ -57,6 +67,7 @@ class _FirstpageState extends State<Firstpage> {
                             height: 0.5,
                           ),
                         ),
+                        //text "forecasts"
                         Text(
                           "ForeCasts",
                           style: TextStyle(
@@ -67,7 +78,10 @@ class _FirstpageState extends State<Firstpage> {
                         ),
                       ],
                     ),
+                    
+                    //spacing for next content (elevated button)
                     SizedBox(height: MediaQuery.of(context).size.height * 0.07),
+                    //elevated button
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, 'secondpage');
@@ -95,11 +109,13 @@ class _FirstpageState extends State<Firstpage> {
                         ),
                       ),
                     ),
+                  
                   ],
                 ),
               );
             },
           ),
+          
         ],
       ),
     );
