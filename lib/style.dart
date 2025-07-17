@@ -15,6 +15,15 @@ BoxDecoration boxdecorationunique = BoxDecoration(
   ),
   borderRadius: BorderRadius.circular(300),
 );
+BoxDecoration cardDecoration = BoxDecoration(
+  gradient: LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomLeft,
+    colors: [Color(0xFF3D2E8F), Color(0xFF9D52AC)],
+    stops: [0.1, 1.0],
+  ),
+  borderRadius: BorderRadius.circular(20),
+);
 
 BoxDecoration boxDecorationregular = BoxDecoration(
   // ignore: deprecated_member_use

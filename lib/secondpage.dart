@@ -63,16 +63,18 @@ class _SecondpageState extends State<Secondpage> {
                     //spacing for the buttons
                     SizedBox(height: height * 0.04),
 
-                    //buttons in the top in a row
+                    //two buttons and text in the top in a row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        //spacing from the left
+                        //spacing from the left for backward button
                         SizedBox(width: width * 0.05),
+
                         //button for backward
                         IconButton(
                           onPressed: () {
+                            //it'll take to first page if pressed
                             Navigator.pushNamed(context, 'firstpage');
                           },
                           iconSize: width * 0.07,
@@ -83,8 +85,11 @@ class _SecondpageState extends State<Secondpage> {
                         ),
                         //spacer for responsive space between to icons
                         Spacer(),
+
+                        //padding for the text "dhaka,bangladesh and max min temp"
                         Padding(
                           padding: EdgeInsets.only(top: 10),
+                          //column for the text "dhaka,bangladesh","max min temp"
                           child: Column(
                             children: [
                               //text "dhaka,bangladesh"
@@ -109,14 +114,13 @@ class _SecondpageState extends State<Secondpage> {
                           ),
                         ),
                         Spacer(),
-
                         //button for profile
                         IconButton(
                           onPressed: () {},
                           iconSize: width * 0.07,
                           icon: Icon(Icons.person, color: Colors.white),
                         ),
-                        //space from the right
+                        //space from the right for the profile button
                         SizedBox(width: width * 0.05),
                       ],
                     ),
@@ -148,12 +152,14 @@ class _SecondpageState extends State<Secondpage> {
                     //spacing for the next content (horizontal slider and control button)
                     //SizedBox(height: height * 0.001),
 
-                    //container to
+                    //expanded widget to make it responsive
                     Expanded(
                       child: SizedBox(
                         height: height * 0.2,
+                        //all slider forecast contents here with controller button
                         child: Row(
                           children: [
+                            //button backwards to scroll backwards
                             IconButton(
                               icon: Icon(
                                 Icons.arrow_back_ios,
@@ -164,7 +170,10 @@ class _SecondpageState extends State<Secondpage> {
                                 scrollbackward();
                               },
                             ),
+
+                            //slider contents
                             Expanded(
+                              //listview builder for the forecast contents
                               child: ListView.builder(
                                 controller: scrollController,
                                 physics: BouncingScrollPhysics(),
@@ -179,13 +188,15 @@ class _SecondpageState extends State<Secondpage> {
                                       left: width * 0.005,
                                       right: width * 0.007,
                                       top: height * 0.01,
-                                      bottom: height * 0.05,
+                                      bottom: height * 0.03,
                                     ),
                                     //padding: EdgeInsets.all(width * 0.0015),
                                     decoration:
                                         (dayForecast['day'] == 'Mon')
                                             ? boxdecorationunique
                                             : boxDecorationregular,
+
+                                    //content inside the slider capsules in column
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -196,13 +207,15 @@ class _SecondpageState extends State<Secondpage> {
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                             fontSize: width * 0.055,
+                                            fontFamily: "OpenSans-Regular.ttf",
                                           ),
                                         ),
                                         SizedBox(height: height * 0.005),
                                         Text(
                                           dayForecast['icon'] ?? '',
                                           style: TextStyle(
-                                            fontSize: width * 0.09,
+                                            fontSize: width * 0.12,
+                                            fontFamily: "OpenSans-Regular.ttf",
                                           ),
                                         ),
                                         SizedBox(height: height * 0.005),
@@ -211,6 +224,7 @@ class _SecondpageState extends State<Secondpage> {
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: width * 0.055,
+                                            fontFamily: "OpenSans-Regular.ttf",
                                           ),
                                         ),
                                       ],
@@ -220,6 +234,7 @@ class _SecondpageState extends State<Secondpage> {
                               ),
                             ),
 
+                            //backward button to scroll backwards
                             IconButton(
                               icon: Icon(
                                 Icons.arrow_forward_ios,
@@ -243,24 +258,21 @@ class _SecondpageState extends State<Secondpage> {
                           top: height * 0.0004,
                           bottom: height * 0.0004,
                         ),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomLeft,
-                            colors: [Color(0xFF3D2E8F), Color(0xFF9D52AC)],
-                            stops: [0.1, 1.0],
-                          ),
-                          borderRadius: BorderRadius.circular(width * 0.05),
-                        ),
+                        //decoration of card (see more in styles page)
+                        decoration: cardDecoration,
+
+                        //box contents
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            //padding  for text "air quality" and text "air quality"
                             Padding(
                               padding: EdgeInsets.only(
                                 top: height * 0.03,
                                 left: width * 0.05,
                               ),
+
                               child: Text(
                                 "⨁  Air Quality",
                                 style: TextStyle(
@@ -271,6 +283,7 @@ class _SecondpageState extends State<Secondpage> {
                                 ),
                               ),
                             ),
+                            //padding for text 3-low health risk and text "health risk"
                             Padding(
                               padding: EdgeInsets.only(
                                 top: height * 0.008,
@@ -286,14 +299,17 @@ class _SecondpageState extends State<Secondpage> {
                                 ),
                               ),
                             ),
+                            //padding for the line horizontal and horizontal line 
                             Padding(
                               padding: EdgeInsets.only(
                                 top: height * 0.03,
                                 left: width * 0.05,
+                                right: width * 0.09,
                               ),
+
                               child: Container(
                                 width: width * 0.88,
-                                height: height * 0.005,
+                                height: height * 0.004,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     begin: Alignment.centerLeft,
@@ -308,13 +324,15 @@ class _SecondpageState extends State<Secondpage> {
                                 ),
                               ),
                             ),
+                           
+                            //padding for text see more and forward button and contents
                             Padding(
                               padding: EdgeInsets.only(
                                 top: height * 0.05,
                                 left: width * 0.05,
                                 right: width * 0.05,
                               ),
-
+                              //contents
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
