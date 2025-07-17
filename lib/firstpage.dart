@@ -30,7 +30,7 @@ class _FirstpageState extends State<Firstpage> {
               ),
             ),
           ),
-          
+
           //main body content here
           LayoutBuilder(
             builder: (context, constraints) {
@@ -78,7 +78,7 @@ class _FirstpageState extends State<Firstpage> {
                         ),
                       ],
                     ),
-                    
+
                     //spacing for next content (elevated button)
                     SizedBox(height: MediaQuery.of(context).size.height * 0.07),
                     //elevated button
@@ -86,6 +86,7 @@ class _FirstpageState extends State<Firstpage> {
                       onPressed: () {
                         Navigator.pushNamed(context, 'secondpage');
                       },
+                      //button styles
                       style: ButtonStyle(
                         elevation: WidgetStateProperty.all<double>(10),
                         visualDensity: VisualDensity.compact,
@@ -96,6 +97,7 @@ class _FirstpageState extends State<Firstpage> {
                           Color(0xFFDDB130),
                         ),
                       ),
+                      //button text with shimmering effect
                       child: Shimmer.fromColors(
                         baseColor: Color(0xFF362A84),
                         highlightColor: const Color.fromARGB(76, 255, 255, 255),
@@ -103,19 +105,18 @@ class _FirstpageState extends State<Firstpage> {
                         child: Text(
                           "Get Start",
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
                             fontFamily: "ProductSans-Regular",
                           ),
                         ),
                       ),
                     ),
-                  
                   ],
                 ),
               );
             },
           ),
-          
         ],
       ),
     );
