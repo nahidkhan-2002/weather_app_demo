@@ -10,11 +10,11 @@ class Secondpage extends StatefulWidget {
 }
 
 class _SecondpageState extends State<Secondpage> {
-  //maximum and minimum temperature variables
+  // Maximum and minimum temperature variables
   var Maxtemp = "24°";
   var Mintemp = "18°";
 
-  //list to save the 7-days forecast data
+  // List to save the 7-days forecast data
   final List<Map<String, String>> forecast = [
     {"day": "Mon", "temp": "19°C", "icon": "🌦️"},
     {"day": "Tue", "temp": "18°C", "icon": "🌧️"},
@@ -25,12 +25,37 @@ class _SecondpageState extends State<Secondpage> {
     {"day": "Sun", "temp": "22°C", "icon": "🌤️"},
   ];
 
+  // ScrollController for horizontal forecast list
+  final ScrollController scrollController = ScrollController();
+
+  // Scroll backward in forecast list
+  void scrollbackward() {
+    scrollController.animateTo(
+      scrollController.offset - 100,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
+  }
+
+  // Scroll forward in forecast list
+  void scrollforward() {
+    scrollController.animateTo(
+      scrollController.offset + 100,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Get device width and height for responsiveness
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: [
-          // Background
+          // Responsive background gradient
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -45,138 +70,99 @@ class _SecondpageState extends State<Secondpage> {
               ),
             ),
           ),
-
-          //main content here
-          Transform.scale(
-            alignment: Alignment.center,
-            scale: 0.9,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                //width and height for responsive width and height of a device
-                final width = constraints.maxWidth;
-                final height = constraints.maxHeight;
-
-                //all content in center
-                return Center(
-                  //all content in column
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      //spacing for the buttons
-                      SizedBox(height: height * 0.01),
-
-                      //two buttons and text in the top in a row
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          //spacing from the left for backward button
-                          SizedBox(width: width * 0.03),
-                          //button for backward
-                          IconButton(
-                            onPressed: () {
-                              //it'll take to first page if pressed
-                              Navigator.pushNamed(context, 'firstpage');
-                            },
-                            iconSize: width * 0.07,
-                            icon: Icon(
-                              Icons.arrow_back_ios_new,
-                              color: Colors.white,
+          // Main content with scroll for small screens/web
+          SafeArea(
+            child: SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: height, minWidth: width),
+                child: IntrinsicHeight(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.03,
+                      vertical: height * 0.06,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Top bar with back/profile buttons and city info
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // Back button
+                            IconButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, 'firstpage');
+                              },
+                              iconSize: width * 0.07,
+                              icon: Icon(
+                                Icons.arrow_back_ios_new,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          //spacer for responsive space between to icons
-                          Spacer(),
-
-                          //padding for the text "dhaka,bangladesh and max min temp"
-                          Padding(
-                            padding: EdgeInsets.only(top: 10),
-                            //column for the text "dhaka,bangladesh","max min temp"
-                            child: Column(
+                            // City and temperature info
+                            Column(
                               children: [
-                                //text "dhaka,bangladesh"
                                 Text(
                                   "Dhaka,Bangladesh",
                                   style: TextStyle(
                                     fontFamily: 'ProductSans-Regular',
-                                    fontSize: width * 0.06,
+                                    fontSize: width * 0.05,
                                     color: Colors.white,
                                   ),
                                 ),
-
-                                //text min and max tempareture
                                 Text(
                                   "Max : $Maxtemp   Min : $Mintemp",
                                   style: TextStyle(
-                                    fontSize: width * 0.05,
+                                    fontSize: width * 0.04,
                                     color: Colors.white,
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-
-                          Spacer(),
-                          //button for profile
-                          IconButton(
-                            onPressed: () {},
-                            iconSize: width * 0.07,
-                            icon: Icon(Icons.person, color: Colors.white),
-                          ),
-                          //space from the right for the profile button
-                          SizedBox(width: width * 0.03),
-                        ],
-                      ),
-
-                      //space for the next content in column (7-days forecast)
-                      SizedBox(height: height * 0.001),
-
-                      //padding for the text "7-days forecast"
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(
-                          width * 0.08,
-                          height * 0.06,
-                          width * 0.4,
-                          height * 0.009,
+                            // Profile button
+                            IconButton(
+                              onPressed: () {},
+                              iconSize: width * 0.07,
+                              icon: Icon(Icons.person, color: Colors.white),
+                            ),
+                          ],
                         ),
-                        //text "7-days forecast"
-                        child: Text(
-                          "7-Days Forecast",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'OpenSans-Regular.ttf',
-                            fontSize: width * 0.06,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(height: height * 0.07),
+
+                        // 7-Days Forecast title
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: width * 0.02),
+                            child: Text(
+                              "7-Days Forecast",
+                              style: TextStyle(
+                                fontFamily: 'OpenSans-Regular.ttf',
+                                fontSize: width * 0.055,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        SizedBox(height: height * 0.01),
 
-                      //spacing for the next content (horizontal slider and control button)
-                      //SizedBox(height: height * 0.001),
-
-                      //expanded widget to make it responsive
-                      Expanded(
-                        child: SizedBox(
-                          height: height * 0.2,
-                          //all slider forecast contents here with controller button
+                        // Forecast horizontal list with scroll buttons
+                        SizedBox(
+                          height: height * 0.19,
                           child: Row(
                             children: [
-                              //button backwards to scroll backwards
+                              // Scroll backward button
                               IconButton(
                                 icon: Icon(
                                   Icons.arrow_back_ios,
                                   color: Colors.white,
                                 ),
                                 iconSize: width * 0.06,
-                                onPressed: () {
-                                  scrollbackward();
-                                },
+                                onPressed: scrollbackward,
                               ),
-
-                              //slider contents
+                              // Forecast list
                               Expanded(
-                                //listview builder for the forecast contents
                                 child: ListView.builder(
                                   controller: scrollController,
                                   physics: BouncingScrollPhysics(),
@@ -185,21 +171,16 @@ class _SecondpageState extends State<Secondpage> {
                                   itemBuilder: (context, index) {
                                     final dayForecast = forecast[index];
                                     return Container(
-                                      // height: height * 0.001,
-                                      width: width * 0.25,
-                                      margin: EdgeInsets.only(
-                                        left: width * 0.005,
-                                        right: width * 0.007,
-                                        top: height * 0.01,
-                                        bottom: height * 0.03,
+                                      width: width * 0.22,
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: width * 0.0114,
+                                        vertical: height * 0.002,
                                       ),
-                                      //padding: EdgeInsets.all(width * 0.0015),
                                       decoration:
                                           (dayForecast['day'] == 'Mon')
                                               ? boxdecorationunique
                                               : boxDecorationregular,
 
-                                      //content inside the slider capsules in column
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -209,7 +190,7 @@ class _SecondpageState extends State<Secondpage> {
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: width * 0.055,
+                                              fontSize: width * 0.045,
                                               fontFamily:
                                                   "OpenSans-Regular.ttf",
                                             ),
@@ -218,7 +199,7 @@ class _SecondpageState extends State<Secondpage> {
                                           Text(
                                             dayForecast['icon'] ?? '',
                                             style: TextStyle(
-                                              fontSize: width * 0.12,
+                                              fontSize: width * 0.09,
                                               fontFamily:
                                                   "OpenSans-Regular.ttf",
                                             ),
@@ -228,7 +209,7 @@ class _SecondpageState extends State<Secondpage> {
                                             dayForecast['temp'] ?? '',
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: width * 0.055,
+                                              fontSize: width * 0.045,
                                               fontFamily:
                                                   "OpenSans-Regular.ttf",
                                             ),
@@ -240,200 +221,160 @@ class _SecondpageState extends State<Secondpage> {
                                 ),
                               ),
 
-                              //backward button to scroll backwards
+                              // Scroll forward button
                               IconButton(
                                 icon: Icon(
                                   Icons.arrow_forward_ios,
                                   color: Colors.white,
                                 ),
                                 iconSize: width * 0.06,
-                                onPressed: () {
-                                  scrollforward();
-                                },
+                                onPressed: scrollforward,
                               ),
                             ],
                           ),
                         ),
-                      ),
+                        SizedBox(height: height * 0.025),
 
-                      Expanded(
-                        child: Container(
-                          height: height * 0.09,
-                          width: width * 0.92,
-                          margin: EdgeInsets.only(
-                            top: height * 0.0004,
-                            bottom: height * 0.00001,
+                        // Air Quality Card
+                        Container(
+                          width: double.infinity,
+                          margin: EdgeInsets.symmetric(vertical: height * 0.01),
+                          decoration: cardDecoration.copyWith(
+                            boxShadow: [shadowstyle],
                           ),
-                          //decoration of card (see more in styles page)
-                          decoration: cardDecoration,
-
-                          //box contents
-                          child: Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                //padding  for text "air quality" and text "air quality"
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: height * 0.03,
-                                    left: width * 0.05,
-                                  ),
-
-                                  child: Text(
-                                    "⨁  Air Quality",
-                                    style: TextStyle(
-                                      fontFamily: 'OpenSans-Regular.ttf',
-                                      fontSize: width * 0.05,
-                                      letterSpacing: 0.47,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                          padding: EdgeInsets.symmetric(
+                            vertical: height * 0.025,
+                            horizontal: width * 0.05,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "⨁  Air Quality",
+                                style: TextStyle(
+                                  fontFamily: 'OpenSans-Regular.ttf',
+                                  fontSize: width * 0.045,
+                                  letterSpacing: 0.47,
+                                  color: Colors.white,
                                 ),
-                                //padding for text 3-low health risk and text "health risk"
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: height * 0.008,
-                                    left: width * 0.05,
-                                  ),
-                                  child: Text(
-                                    "3-Low Health Risk",
-                                    style: TextStyle(
-                                      fontFamily: 'OpenSans-Semibold.ttf',
-                                      fontSize: width * 0.07,
-                                      letterSpacing: 0.47,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                              ),
+                              SizedBox(height: height * 0.008),
+                              Text(
+                                "3-Low Health Risk",
+                                style: TextStyle(
+                                  fontFamily: 'OpenSans-Semibold.ttf',
+                                  fontSize: width * 0.06,
+                                  letterSpacing: 0.47,
+                                  color: Colors.white,
                                 ),
-
-                                //padding for the line horizontal and horizontal line
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: height * 0.03,
-                                    left: width * 0.05,
-                                    right: width * 0.09,
-                                  ),
-
-                                  child: Container(
-                                    width: width * 0.88,
-                                    height: height * 0.004,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight,
-                                        colors: [
-                                          Color(0xFF362A84),
-                                          Color(0xFF805BCA).withOpacity(0.82),
-                                          Color(0xFFBD08FC),
-                                        ],
-                                        stops: [0.0, 1.0, 1.0],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                //padding for text see more and forward button and contents
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: height * 0.03,
-                                    left: width * 0.05,
-                                    right: width * 0.05,
-                                  ),
-                                  //contents
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "See More",
-                                        style: TextStyle(
-                                          fontFamily: 'OpenSans-SemiBold.ttf',
-                                          fontSize: width * 0.045,
-                                          letterSpacing: 0.47,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      //forward Icon beside see more
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.white,
-                                        size: width * 0.08,
-                                      ),
+                              ),
+                              SizedBox(height: height * 0.02),
+                              // Gradient line
+                              Container(
+                                width: double.infinity,
+                                height: height * 0.004,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                    colors: [
+                                      Color(0xFF362A84),
+                                      Color(0xFF805BCA).withOpacity(0.82),
+                                      Color(0xFFBD08FC),
                                     ],
+                                    stops: [0.0, 1.0, 1.0],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              SizedBox(height: height * 0.02),
+                              // See More row
+                              Row(
+                                children: [
+                                  Text(
+                                    "See More",
+                                    style: TextStyle(
+                                      fontFamily: 'OpenSans-SemiBold.ttf',
+                                      fontSize: width * 0.04,
+                                      letterSpacing: 0.47,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.white,
+                                    size: width * 0.06,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      ),
 
-                      Expanded(
-                        child: Row(
+                        SizedBox(height: height * 0.02),
+                        // Two responsive cards at the bottom
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.42,
-                              height: height * 0.2,
-                              decoration: cardDecoration.copyWith(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color.fromARGB(
-                                      125,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
-                                    offset: Offset.zero,
-                                    blurRadius: BorderSide.strokeAlignCenter,
-                                    spreadRadius: 3.0,
-                                    blurStyle: BlurStyle.solid,
-                                  ),
-                                ],
-                              ),
-                              padding: EdgeInsets.all(18),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      
-                                    ],
-                                  )
-                                ],
+                            Flexible(
+                              child: Container(
+                                height: height * 0.18,
+                                decoration: cardstyle_2,
+                                padding: EdgeInsets.only(left: width * 0.5),
+                                child: Column(
+                                  children: [
+                                    // Add your content here
+                                    Row(),
+                                  ],
+                                ),
                               ),
                             ),
+                            SizedBox(width: width * 0.04),
 
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.42,
-                              height: height * 0.2,
-                              decoration: cardDecoration.copyWith(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color.fromARGB(
-                                      125,
-                                      255,
-                                      255,
-                                      255,
+                            Flexible(
+                              child: Container(
+                                height: height * 0.18,
+                                decoration: cardstyle_2,
+                                padding: EdgeInsets.only(right: width * 0.5),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Add your content here
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.star,
+                                          color: Colors.yellow,
+                                          size: width * 0.07,
+                                        ),
+                                        SizedBox(width: width * 0.02),
+                                        Text(
+                                          "Sunrise",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: width * 0.045,
+                                            fontFamily: 'OpenSans-Regular.ttf',
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    offset: Offset.zero,
-                                    blurRadius: BorderSide.strokeAlignCenter,
-                                    spreadRadius: 3.0,
-                                    blurStyle: BlurStyle.solid,
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                              padding: EdgeInsets.all(18),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        SizedBox(height: height * 0.02),
+                      ],
+                    ),
                   ),
-                );
-              },
+                ),
+              ),
             ),
           ),
         ],

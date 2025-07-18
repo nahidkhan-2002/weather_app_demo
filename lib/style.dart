@@ -13,7 +13,7 @@ BoxDecoration boxdecorationunique = BoxDecoration(
     ],
     stops: [0.0, 0.5, 1.0],
   ),
-  borderRadius: BorderRadius.circular(300),
+  borderRadius: BorderRadius.circular(50),
 );
 BoxDecoration cardDecoration = BoxDecoration(
   gradient: LinearGradient(
@@ -39,11 +39,30 @@ BoxDecoration boxDecorationregular = BoxDecoration(
     ],
     stops: [0.1, 1.0],
   ),
-  borderRadius: BorderRadius.circular(300),
+  borderRadius: BorderRadius.circular(50),
 );
 
 BoxShadow shadowstyle = BoxShadow(
   color: Colors.black26,
   blurRadius: 6,
   offset: Offset(0, 2),
+);
+
+BoxDecoration cardstyle_2 = BoxDecoration(
+  // ignore: deprecated_member_use
+  gradient: LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomLeft,
+    colors: [
+      Color(0xFF3E2D8F),
+      Color(0xFF9D52AC), // Top: dark navy
+      // Top: dark navy
+      // Middle: violet
+      // Bottom: magenta/purple
+    ],
+    stops: [0.1, 1.0],
+  ),
+  border: Border.all(color: Color(0xFFF7CBFD).withAlpha(190), width: 2),
+  boxShadow: [shadowstyle],
+  borderRadius: BorderRadius.circular(20),
 );
