@@ -62,7 +62,7 @@ BoxDecoration cardstyle_2 = BoxDecoration(
     ],
     stops: [0.1, 1.0],
   ),
-  border: Border.all(color: Color(0xFFF7CBFD).withAlpha(190), width: 2),
+  border: Border.all(color: Color(0xFFF7CBFD).withOpacity(0), width: 2),
   boxShadow: [shadowstyle],
   borderRadius: BorderRadius.circular(20),
 );
