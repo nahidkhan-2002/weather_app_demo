@@ -1,6 +1,6 @@
 import 'package:lottie/lottie.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Firstpage extends StatefulWidget {
   const Firstpage({super.key});
@@ -59,21 +59,22 @@ class _FirstpageState extends State<Firstpage> {
                         //text "weather"
                         Text(
                           "Weather",
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 64,
                             color: Colors.white,
-                            fontFamily: "ProductSans-Regular",
                             fontWeight: FontWeight.bold,
                             height: 0.5,
+                            wordSpacing: 0.47,
                           ),
                         ),
                         //text "forecasts"
                         Text(
                           "ForeCasts",
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 64,
                             color: Color(0xFFDDB130),
-                            fontFamily: "Poppins-Regular",
+                            fontWeight: FontWeight.w400,
+                            wordSpacing: 0.47,
                           ),
                         ),
                       ],
@@ -97,18 +98,13 @@ class _FirstpageState extends State<Firstpage> {
                           Color(0xFFDDB130),
                         ),
                       ),
-                      //button text with shimmering effect
-                      child: Shimmer.fromColors(
-                        baseColor: Color(0xFF362A84),
-                        highlightColor: const Color.fromARGB(76, 255, 255, 255),
-                        period: Duration(seconds: 2),
-                        child: Text(
-                          "Get Start",
-                          style: TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "ProductSans-Regular",
-                          ),
+                      //button text
+                      child: Text(
+                        "Get Start",
+                        style: GoogleFonts.openSans(
+                          fontSize: 28,
+                          color: Color(0xFF362A84),
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),

@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 ScrollController scrollController = ScrollController();
 void scrollforward() {
   scrollController.animateTo(
-    scrollController.offset + 89,
+    scrollController.offset + 90,
     duration: Duration(seconds: 1),
-    curve: Curves.easeInOut,
+    curve: Curves.ease,
   );
 }
 
 void scrollbackward() {
   scrollController.animateTo(
     scrollController.offset -
-        89.clamp(0.0, scrollController.position.maxScrollExtent),
+        90.clamp(0.0, scrollController.position.maxScrollExtent),
     duration: Duration(seconds: 1),
-    curve: Curves.easeInOut,
+    curve: Curves.ease,
   );
 }
